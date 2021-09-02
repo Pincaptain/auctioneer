@@ -42,6 +42,6 @@ public class User {
     private Token token;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    @JoinTable(name = "user_groups", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
     private Set<Group> groups;
 }
