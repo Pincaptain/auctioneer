@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 public @interface UniqueUsername {
     String message() default "User with that username already exists.";
 
-    Class<?>[] groups() default {};
+    @SuppressWarnings("unused") Class<?>[] groups() default {};
 
-    public abstract Class<? extends Payload>[] payload() default {};
+    @SuppressWarnings({"UnnecessaryInterfaceModifier", "unused"}) public abstract Class<? extends Payload>[] payload() default {};
 }

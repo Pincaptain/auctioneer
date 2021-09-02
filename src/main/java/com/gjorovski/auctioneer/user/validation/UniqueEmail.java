@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 public @interface UniqueEmail {
     String message() default "User with that email already exists.";
 
-    Class<?>[] groups() default {};
+    @SuppressWarnings("unused") Class<?>[] groups() default {};
 
-    public abstract Class<? extends Payload>[] payload() default {};
+    @SuppressWarnings({"unused", "UnnecessaryInterfaceModifier"}) public abstract Class<? extends Payload>[] payload() default {};
 }
