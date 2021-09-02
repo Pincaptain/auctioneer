@@ -24,4 +24,9 @@ public class Group {
 
     @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER)
     private Set<User> users;
+
+    @PreRemove
+    public void deleteGroupFromUsers() {
+        users.forEach(user -> user.getGroups().removeIf(group -> group.id.equals(id)));
+    }
 }

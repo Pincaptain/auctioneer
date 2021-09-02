@@ -1,9 +1,10 @@
 package com.gjorovski.auctioneer.auth.controller;
 
 import com.gjorovski.auctioneer.auth.data.Authentication;
+import com.gjorovski.auctioneer.auth.request.UpdateGroupRequest;
 import com.gjorovski.auctioneer.auth.service.GroupService;
 import com.gjorovski.auctioneer.auth.model.Group;
-import com.gjorovski.auctioneer.auth.request.GroupRequest;
+import com.gjorovski.auctioneer.auth.request.CreateGroupRequest;
 import com.gjorovski.auctioneer.auth.response.GroupResponse;
 import com.gjorovski.auctioneer.shared.exceptions.PermissionDeniedException;
 import org.modelmapper.ModelMapper;
@@ -53,15 +54,40 @@ public class GroupController {
     }
 
     @PostMapping
-    public ResponseEntity<GroupResponse> createGroup(@RequestBody @Valid GroupRequest groupRequest, @RequestAttribute Authentication authentication) {
+    public ResponseEntity<GroupResponse> createGroup(@RequestBody @Valid CreateGroupRequest createGroupRequest, @RequestAttribute Authentication authentication) {
         if (!authentication.inGroup("Admin")) {
             throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
         }
 
-        Group group = modelMapper.map(groupRequest, Group.class);
+        Group group = modelMapper.map(createGroupRequest, Group.class);
         Group createdGroup = groupService.createGroup(group);
         GroupResponse groupResponse = modelMapper.map(createdGroup, GroupResponse.class);
 
         return new ResponseEntity<>(groupResponse, HttpStatus.CREATED);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<GroupResponse> updateGroup(@PathVariable long id, @RequestBody @Valid UpdateGroupRequest updateGroupRequest, @RequestAttribute Authentication authentication) {
+        if (!authentication.inGroup("Admin")) {
+            throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
+        }
+
+        Group group = modelMapper.map(updateGroupRequest, Group.class);
+        Group updatedGroup = groupService.updateGroup(id, group);
+        GroupResponse groupResponse = modelMapper.map(updatedGroup, GroupResponse.class);
+
+        return new ResponseEntity<>(groupResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<GroupResponse> deleteGroup(@PathVariable long id, @RequestAttribute Authentication authentication) {
+        if (!authentication.inGroup("Admin")) {
+            throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
+        }
+
+        Group group = groupService.deleteGroup(id);
+        GroupResponse groupResponse = modelMapper.map(group, GroupResponse.class);
+
+        return new ResponseEntity<>(groupResponse, HttpStatus.OK);
     }
 }
