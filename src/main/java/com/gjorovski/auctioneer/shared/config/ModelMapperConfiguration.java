@@ -1,4 +1,4 @@
-package com.gjorovski.auctioneer.shared;
+package com.gjorovski.auctioneer.shared.config;
 
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;

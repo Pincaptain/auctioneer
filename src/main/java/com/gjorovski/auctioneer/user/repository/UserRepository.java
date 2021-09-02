@@ -1,5 +1,6 @@
-package com.gjorovski.auctioneer.user;
+package com.gjorovski.auctioneer.user.repository;
 
+import com.gjorovski.auctioneer.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

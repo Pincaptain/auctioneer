@@ -1,6 +1,6 @@
-package com.gjorovski.auctioneer.auth;
+package com.gjorovski.auctioneer.auth.model;
 
-import com.gjorovski.auctioneer.user.User;
+import com.gjorovski.auctioneer.user.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

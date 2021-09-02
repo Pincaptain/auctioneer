@@ -1,6 +1,6 @@
-package com.gjorovski.auctioneer.auth;
+package com.gjorovski.auctioneer.auth.data;
 
-import com.gjorovski.auctioneer.user.User;
+import com.gjorovski.auctioneer.user.model.User;
 import lombok.Data;
 
 @Data

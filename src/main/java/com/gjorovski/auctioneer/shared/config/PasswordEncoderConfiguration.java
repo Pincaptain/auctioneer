@@ -1,4 +1,4 @@
-package com.gjorovski.auctioneer.shared;
+package com.gjorovski.auctioneer.shared.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

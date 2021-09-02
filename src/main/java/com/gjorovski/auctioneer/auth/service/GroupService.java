@@ -1,5 +1,7 @@
-package com.gjorovski.auctioneer.auth;
+package com.gjorovski.auctioneer.auth.service;
 
+import com.gjorovski.auctioneer.auth.model.Group;
+import com.gjorovski.auctioneer.auth.repository.GroupRepository;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 

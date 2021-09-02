@@ -1,8 +1,8 @@
 package com.gjorovski.auctioneer.auth.filter;
 
-import com.gjorovski.auctioneer.auth.Authentication;
-import com.gjorovski.auctioneer.auth.TokenService;
-import com.gjorovski.auctioneer.user.User;
+import com.gjorovski.auctioneer.auth.data.Authentication;
+import com.gjorovski.auctioneer.auth.service.TokenService;
+import com.gjorovski.auctioneer.user.model.User;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 

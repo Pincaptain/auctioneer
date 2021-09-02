@@ -1,7 +1,9 @@
-package com.gjorovski.auctioneer.user;
+package com.gjorovski.auctioneer.user.service;
 
 import com.gjorovski.auctioneer.shared.exceptions.BadRequestException;
 import com.gjorovski.auctioneer.shared.exceptions.PermissionDeniedException;
+import com.gjorovski.auctioneer.user.model.User;
+import com.gjorovski.auctioneer.user.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;

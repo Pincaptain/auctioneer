@@ -1,10 +1,13 @@
-package com.gjorovski.auctioneer.auth;
+package com.gjorovski.auctioneer.auth.controller;
 
+import com.gjorovski.auctioneer.auth.data.Authentication;
+import com.gjorovski.auctioneer.auth.service.TokenService;
+import com.gjorovski.auctioneer.auth.model.Token;
 import com.gjorovski.auctioneer.auth.request.LoginRequest;
 import com.gjorovski.auctioneer.auth.response.LogoutResponse;
 import com.gjorovski.auctioneer.auth.response.TokenResponse;
 import com.gjorovski.auctioneer.shared.exceptions.PermissionDeniedException;
-import com.gjorovski.auctioneer.user.User;
+import com.gjorovski.auctioneer.user.model.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

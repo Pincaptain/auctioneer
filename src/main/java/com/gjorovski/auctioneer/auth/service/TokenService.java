@@ -1,9 +1,11 @@
-package com.gjorovski.auctioneer.auth;
+package com.gjorovski.auctioneer.auth.service;
 
+import com.gjorovski.auctioneer.auth.model.Token;
+import com.gjorovski.auctioneer.auth.repository.TokenRepository;
 import com.gjorovski.auctioneer.shared.exceptions.BadRequestException;
 import com.gjorovski.auctioneer.shared.exceptions.PermissionDeniedException;
-import com.gjorovski.auctioneer.user.User;
-import com.gjorovski.auctioneer.user.UserService;
+import com.gjorovski.auctioneer.user.model.User;
+import com.gjorovski.auctioneer.user.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

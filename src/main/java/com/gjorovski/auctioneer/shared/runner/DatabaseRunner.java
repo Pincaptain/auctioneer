@@ -1,9 +1,9 @@
-package com.gjorovski.auctioneer.shared;
+package com.gjorovski.auctioneer.shared.runner;
 
-import com.gjorovski.auctioneer.auth.Group;
-import com.gjorovski.auctioneer.auth.GroupService;
-import com.gjorovski.auctioneer.user.User;
-import com.gjorovski.auctioneer.user.UserService;
+import com.gjorovski.auctioneer.auth.model.Group;
+import com.gjorovski.auctioneer.auth.service.GroupService;
+import com.gjorovski.auctioneer.user.model.User;
+import com.gjorovski.auctioneer.user.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

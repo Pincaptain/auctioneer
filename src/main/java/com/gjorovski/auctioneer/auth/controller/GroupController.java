@@ -1,5 +1,8 @@
-package com.gjorovski.auctioneer.auth;
+package com.gjorovski.auctioneer.auth.controller;
 
+import com.gjorovski.auctioneer.auth.data.Authentication;
+import com.gjorovski.auctioneer.auth.service.GroupService;
+import com.gjorovski.auctioneer.auth.model.Group;
 import com.gjorovski.auctioneer.auth.request.GroupRequest;
 import com.gjorovski.auctioneer.auth.response.GroupResponse;
 import com.gjorovski.auctioneer.shared.exceptions.PermissionDeniedException;

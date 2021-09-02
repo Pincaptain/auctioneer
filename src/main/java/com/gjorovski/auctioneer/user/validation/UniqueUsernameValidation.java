@@ -1,7 +1,7 @@
 package com.gjorovski.auctioneer.user.validation;
 
-import com.gjorovski.auctioneer.user.User;
-import com.gjorovski.auctioneer.user.UserService;
+import com.gjorovski.auctioneer.user.model.User;
+import com.gjorovski.auctioneer.user.service.UserService;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintValidator;

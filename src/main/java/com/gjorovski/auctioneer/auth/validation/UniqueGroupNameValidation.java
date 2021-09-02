@@ -1,7 +1,7 @@
 package com.gjorovski.auctioneer.auth.validation;
 
-import com.gjorovski.auctioneer.auth.Group;
-import com.gjorovski.auctioneer.auth.GroupService;
+import com.gjorovski.auctioneer.auth.model.Group;
+import com.gjorovski.auctioneer.auth.service.GroupService;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintValidator;
