@@ -12,4 +12,14 @@ public class Authentication {
     public boolean isAuthenticated() {
         return user != null;
     }
+
+    public boolean inGroup(String groupName) {
+        if (user == null) {
+            return false;
+        }
+
+        return user.getGroups()
+                .stream()
+                .anyMatch(group -> group.getName().equals(groupName));
+    }
 }

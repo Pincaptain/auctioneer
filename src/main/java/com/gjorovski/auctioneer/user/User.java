@@ -1,11 +1,13 @@
 package com.gjorovski.auctioneer.user;
 
+import com.gjorovski.auctioneer.auth.Group;
 import com.gjorovski.auctioneer.auth.Token;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "public")
@@ -14,7 +16,7 @@ import javax.persistence.*;
 @Setter
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -38,4 +40,8 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Token token;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_group", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<Group> groups;
 }
