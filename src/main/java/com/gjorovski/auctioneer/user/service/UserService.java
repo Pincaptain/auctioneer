@@ -1,6 +1,5 @@
 package com.gjorovski.auctioneer.user.service;
 
-import com.gjorovski.auctioneer.shared.exceptions.BadRequestException;
 import com.gjorovski.auctioneer.shared.exceptions.PermissionDeniedException;
 import com.gjorovski.auctioneer.user.model.User;
 import com.gjorovski.auctioneer.user.repository.UserRepository;
@@ -66,12 +65,6 @@ public class UserService {
     }
 
     public User updateUsername(User user, String username) {
-        User existingUser = getUserByUsername(username);
-
-        if (existingUser != null && !existingUser.getId().equals(user.getId())) {
-            throw new BadRequestException("User with that username already exists.");
-        }
-
         user.setUsername(username);
         userRepository.save(user);
 
@@ -79,12 +72,6 @@ public class UserService {
     }
 
     public User updateEmail(User user, String email) {
-        User existingUser = getUserByEmail(email);
-
-        if (existingUser != null && !existingUser.getId().equals(user.getId())) {
-            throw new BadRequestException("User with that email already exists.");
-        }
-
         user.setEmail(email);
         userRepository.save(user);
 
