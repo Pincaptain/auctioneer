@@ -1,6 +1,6 @@
 package com.gjorovski.auctioneer.user.controller;
 
-import com.gjorovski.auctioneer.auth.data.Authentication;
+import com.gjorovski.auctioneer.auth.domain.Authentication;
 import com.gjorovski.auctioneer.shared.exceptions.PermissionDeniedException;
 import com.gjorovski.auctioneer.user.service.UserService;
 import com.gjorovski.auctioneer.user.model.User;

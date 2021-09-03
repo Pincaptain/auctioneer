@@ -1,6 +1,6 @@
 package com.gjorovski.auctioneer.user.validation;
 
-import com.gjorovski.auctioneer.auth.data.Authentication;
+import com.gjorovski.auctioneer.auth.domain.Authentication;
 import com.gjorovski.auctioneer.user.model.User;
 import com.gjorovski.auctioneer.user.service.UserService;
 import org.springframework.stereotype.Component;

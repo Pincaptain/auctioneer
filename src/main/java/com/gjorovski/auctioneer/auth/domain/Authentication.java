@@ -1,4 +1,4 @@
-package com.gjorovski.auctioneer.auth.data;
+package com.gjorovski.auctioneer.auth.domain;
 
 import com.gjorovski.auctioneer.user.model.User;
 import lombok.Data;

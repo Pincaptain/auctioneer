@@ -1,6 +1,6 @@
 package com.gjorovski.auctioneer.auth.controller;
 
-import com.gjorovski.auctioneer.auth.data.Authentication;
+import com.gjorovski.auctioneer.auth.domain.Authentication;
 import com.gjorovski.auctioneer.auth.request.UpdateGroupRequest;
 import com.gjorovski.auctioneer.auth.service.GroupService;
 import com.gjorovski.auctioneer.auth.model.Group;
