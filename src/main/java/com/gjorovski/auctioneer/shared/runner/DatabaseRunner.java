@@ -8,7 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.List;
 
 @Component
 @Order(1)
@@ -34,16 +34,16 @@ public class DatabaseRunner implements CommandLineRunner {
 
         Group userGroup = new Group();
         userGroup.setName("User");
-        userGroup.setUsers(Set.of(superUser));
+        userGroup.setUsers(List.of(superUser));
 
         Group adminGroup = new Group();
         adminGroup.setName("Admin");
-        adminGroup.setUsers(Set.of(superUser));
+        adminGroup.setUsers(List.of(superUser));
 
         groupService.createGroup(userGroup);
         groupService.createGroup(adminGroup);
 
-        superUser.setGroups(Set.of(userGroup, adminGroup));
+        superUser.setGroups(List.of(userGroup, adminGroup));
 
         userService.updateUser(userService.getUserById(superUser.getId()), superUser);
     }

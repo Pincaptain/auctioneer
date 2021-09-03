@@ -9,10 +9,12 @@ public class Authentication {
 
     private final User user;
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isAuthenticated() {
         return user != null;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean inGroup(String groupName) {
         if (user == null) {
             return false;

@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "group", schema = "public")
@@ -23,7 +24,7 @@ public class Group {
     private String name;
 
     @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER)
-    private Set<User> users;
+    private List<User> users = new ArrayList<>();
 
     @PreRemove
     public void deleteGroupFromUsers() {
