@@ -62,4 +62,13 @@ public class GroupService {
 
         return groupRepository.save(group);
     }
+
+    public Group removeUserFromGroup(long userId, long groupId) {
+        User user = userService.getUserById(userId);
+        Group group = getGroupById(groupId);
+
+        group.removeUser(user);
+
+        return groupRepository.save(group);
+    }
 }

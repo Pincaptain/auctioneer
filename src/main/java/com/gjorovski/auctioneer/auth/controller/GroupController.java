@@ -3,6 +3,7 @@ package com.gjorovski.auctioneer.auth.controller;
 import com.gjorovski.auctioneer.auth.domain.Authentication;
 import com.gjorovski.auctioneer.auth.domain.GroupType;
 import com.gjorovski.auctioneer.auth.request.AddUserToGroupRequest;
+import com.gjorovski.auctioneer.auth.request.RemoveUserFromGroupRequest;
 import com.gjorovski.auctioneer.auth.request.UpdateGroupRequest;
 import com.gjorovski.auctioneer.auth.service.GroupService;
 import com.gjorovski.auctioneer.auth.model.Group;
@@ -100,6 +101,18 @@ public class GroupController {
         }
 
         Group group = groupService.addUserToGroup(addUserToGroupRequest.getUserId(), addUserToGroupRequest.getGroupId());
+        GroupResponse groupResponse = modelMapper.map(group, GroupResponse.class);
+
+        return new ResponseEntity<>(groupResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("remove_user_from_group")
+    public ResponseEntity<GroupResponse> removeUserFromGroup(@RequestBody RemoveUserFromGroupRequest removeUserFromGroupRequest, @RequestAttribute Authentication authentication) {
+        if (!authentication.inGroup(GroupType.ADMIN)) {
+            throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
+        }
+
+        Group group = groupService.removeUserFromGroup(removeUserFromGroupRequest.getUserId(), removeUserFromGroupRequest.getGroupId());
         GroupResponse groupResponse = modelMapper.map(group, GroupResponse.class);
 
         return new ResponseEntity<>(groupResponse, HttpStatus.OK);

@@ -35,4 +35,9 @@ public class Group {
         user.getGroups().add(this);
         users.add(user);
     }
+
+    public void removeUser(User user) {
+        user.getGroups().remove(this);
+        users.remove(user);
+    }
 }
