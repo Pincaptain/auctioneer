@@ -32,7 +32,7 @@ public class UpdatableGroupNameValidation implements ConstraintValidator<Updatab
         @SuppressWarnings("unchecked")
         Map<String, String> parameters = (Map<String, String>) httpServletRequest.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         long id = Long.parseLong(parameters.get("id"));
-        Group group = groupService.getGroup(id);
+        Group group = groupService.getGroupById(id);
 
         if (group.getName().equals(name)) {
             return true;

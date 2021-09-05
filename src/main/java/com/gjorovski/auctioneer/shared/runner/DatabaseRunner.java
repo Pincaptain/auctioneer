@@ -30,7 +30,15 @@ public class DatabaseRunner implements CommandLineRunner {
         superUser.setLastName("Gjorovski");
         superUser.setPassword("12345borjan");
 
+        User user = new User();
+        user.setUsername("elena.jovanovska");
+        user.setEmail("elena.jovanovska@outlook.com");
+        user.setFirstName("Elena");
+        user.setLastName("Jovanovska");
+        user.setPassword("12345borjan");
+
         userService.createUser(superUser);
+        userService.createUser(user);
 
         Group userGroup = new Group();
         userGroup.setName("User");
@@ -44,7 +52,9 @@ public class DatabaseRunner implements CommandLineRunner {
         groupService.createGroup(adminGroup);
 
         superUser.setGroups(List.of(userGroup, adminGroup));
-
         userService.updateUser(userService.getUserById(superUser.getId()), superUser);
+
+        user.setGroups(List.of(userGroup));
+        userService.updateUser(userService.getUserById(user.getId()), user);
     }
 }

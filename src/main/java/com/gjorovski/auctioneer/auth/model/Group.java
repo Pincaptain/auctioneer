@@ -30,4 +30,9 @@ public class Group {
     public void deleteGroupFromUsers() {
         users.forEach(user -> user.getGroups().removeIf(group -> group.id.equals(id)));
     }
+
+    public void addUser(User user) {
+        user.getGroups().add(this);
+        users.add(user);
+    }
 }
