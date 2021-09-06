@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,13 @@ public class Auction {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
+
+    @Lob
+    @Column(name = "details")
+    private String details;
+
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Lot> lots;
+    private List<Lot> lots = new ArrayList<>();
 }

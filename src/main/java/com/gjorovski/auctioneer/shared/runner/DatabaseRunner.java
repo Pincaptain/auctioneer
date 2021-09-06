@@ -1,13 +1,17 @@
 package com.gjorovski.auctioneer.shared.runner;
 
+import com.gjorovski.auctioneer.auction.model.Auction;
 import com.gjorovski.auctioneer.auction.model.Item;
 import com.gjorovski.auctioneer.auction.model.Lot;
+import com.gjorovski.auctioneer.auction.service.AuctionService;
 import com.gjorovski.auctioneer.auction.service.ItemService;
 import com.gjorovski.auctioneer.auction.service.LotService;
 import com.gjorovski.auctioneer.auth.model.Group;
 import com.gjorovski.auctioneer.auth.service.GroupService;
 import com.gjorovski.auctioneer.user.model.User;
 import com.gjorovski.auctioneer.user.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -21,18 +25,22 @@ public class DatabaseRunner implements CommandLineRunner {
     private final GroupService groupService;
     private final ItemService itemService;
     private final LotService lotService;
+    private final AuctionService auctionService;
 
-    public DatabaseRunner(UserService userService, GroupService groupService, ItemService itemService, LotService lotService) {
+    private final Logger logger = LoggerFactory.getLogger(DatabaseRunner.class);
+
+    public DatabaseRunner(UserService userService, GroupService groupService, ItemService itemService, LotService lotService, AuctionService auctionService) {
         this.userService = userService;
         this.groupService = groupService;
         this.itemService = itemService;
         this.lotService = lotService;
+        this.auctionService = auctionService;
     }
 
     @Override
     public void run(String... args) {
         createUsersAndGroups();
-        createItems();
+        createItemsAndAuctions();
     }
 
     private void createUsersAndGroups() {
@@ -71,7 +79,7 @@ public class DatabaseRunner implements CommandLineRunner {
         userService.updateUser(userService.getUserById(user.getId()), user);
     }
 
-    private void createItems() {
+    private void createItemsAndAuctions() {
         Item item = new Item();
         item.setName("Statue of Liberty");
         item.setDetails("The Statue of Liberty is a 305-foot (93-metre) statue located on Liberty Island in Upper New York Bay, off the coast of New York City. The statue is a personification of liberty in the form of a woman. She holds a torch in her raised right hand and clutches a tablet in her left.");
@@ -84,8 +92,13 @@ public class DatabaseRunner implements CommandLineRunner {
         lot.setItem(createdItem);
         lot.setStartingPrice(200000);
 
-        Lot createdLot = lotService.createLot(lot);
+        Auction auction = new Auction();
+        auction.setName("North Hills Auction");
+        auction.setDetails("North Hills testing groups virtual auction house.");
+        auction.setLots(List.of(lot));
 
-        System.out.printf("%s created right now!", createdLot.getItem().getName());
+        Auction createdAuction = auctionService.createAuction(auction);
+
+        logger.info(String.format("An auction was created with id(%d)", createdAuction.getId()));
     }
 }
