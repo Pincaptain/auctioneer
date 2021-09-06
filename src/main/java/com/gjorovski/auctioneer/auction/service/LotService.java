@@ -2,7 +2,7 @@ package com.gjorovski.auctioneer.auction.service;
 
 import com.gjorovski.auctioneer.auction.model.Lot;
 import com.gjorovski.auctioneer.auction.repository.LotRepository;
-import com.gjorovski.auctioneer.auction.task.LotManagerTask;
+import com.gjorovski.auctioneer.auction.task.LotExpirationTask;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +26,17 @@ public class LotService {
 
     public Lot createLot(Lot lot) {
         Lot createdLot = lotRepository.save(lot);
-        Instant expirationDate = createdLot.getExpiresAt().atZone(ZoneId.of("Europe/Paris")).toInstant();
-        LotManagerTask lotManagerTask = new LotManagerTask(this, lot);
 
-        threadPoolTaskScheduler.schedule(lotManagerTask, expirationDate);
+        scheduleLotTask(createdLot);
 
         return createdLot;
+    }
+
+    public void scheduleLotTask(Lot lot) {
+        Instant expirationDate = lot.getExpiresAt().atZone(ZoneId.of("Europe/Paris")).toInstant();
+        LotExpirationTask lotExpirationTask = new LotExpirationTask(this, lot);
+
+        threadPoolTaskScheduler.schedule(lotExpirationTask, expirationDate);
     }
 
     public Lot deleteLot(Lot lot) {

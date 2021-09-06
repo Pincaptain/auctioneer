@@ -1,13 +1,12 @@
 package com.gjorovski.auctioneer.auction.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.gjorovski.auctioneer.user.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "lot", schema = "public")
@@ -32,8 +31,12 @@ public class Lot {
     @Column(name = "starting_price", nullable = false)
     private double startingPrice;
 
-    @Column(name = "current_bid", nullable = false)
-    private double currentBid = startingPrice;
+    @Column(name = "current_bid")
+    private double currentBid;
+
+    @ManyToOne
+    @JoinColumn(name = "bidder_id")
+    private User highestBidder;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();

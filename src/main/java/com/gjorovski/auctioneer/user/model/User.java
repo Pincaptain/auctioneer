@@ -1,5 +1,6 @@
 package com.gjorovski.auctioneer.user.model;
 
+import com.gjorovski.auctioneer.auction.model.Inventory;
 import com.gjorovski.auctioneer.auth.model.Group;
 import com.gjorovski.auctioneer.auth.model.Token;
 import lombok.Getter;
@@ -41,6 +42,9 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Token token;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "owner")
+    private Inventory inventory;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_groups", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
