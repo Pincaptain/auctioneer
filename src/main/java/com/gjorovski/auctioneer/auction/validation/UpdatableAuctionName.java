@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = UniqueAuctionNameValidation.class)
-public @interface UniqueAuctionName {
+@Constraint(validatedBy = UpdatableAuctionNameValidation.class)
+public @interface UpdatableAuctionName {
     String message() default "Auction with that name already exists.";
 
     @SuppressWarnings("unused") Class<?>[] groups() default {};

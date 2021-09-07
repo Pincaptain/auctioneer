@@ -24,4 +24,12 @@ public class Authentication {
                 .stream()
                 .anyMatch(group -> group.getName().equals(groupName));
     }
+
+    public boolean isUser(User other) {
+        if (user == null || other == null) {
+            return false;
+        }
+
+        return user.getId().equals(other.getId());
+    }
 }

@@ -1,5 +1,6 @@
 package com.gjorovski.auctioneer.auction.model;
 
+import com.gjorovski.auctioneer.user.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,10 @@ public class Auction {
     @Lob
     @Column(name = "details")
     private String details;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Lot> lots = new ArrayList<>();

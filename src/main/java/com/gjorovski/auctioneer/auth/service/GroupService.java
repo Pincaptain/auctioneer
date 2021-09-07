@@ -42,9 +42,8 @@ public class GroupService {
         Group currentGroup = getGroupById(id);
 
         modelMapper.map(group, currentGroup);
-        groupRepository.save(currentGroup);
 
-        return currentGroup;
+        return groupRepository.save(currentGroup);
     }
 
     public Group deleteGroup(long id) {

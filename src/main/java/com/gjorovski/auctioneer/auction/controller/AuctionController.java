@@ -2,6 +2,7 @@ package com.gjorovski.auctioneer.auction.controller;
 
 import com.gjorovski.auctioneer.auction.model.Auction;
 import com.gjorovski.auctioneer.auction.request.CreateAuctionRequest;
+import com.gjorovski.auctioneer.auction.request.UpdateAuctionRequest;
 import com.gjorovski.auctioneer.auction.response.AuctionResponse;
 import com.gjorovski.auctioneer.auction.service.AuctionService;
 import com.gjorovski.auctioneer.auth.domain.Authentication;
@@ -55,5 +56,42 @@ public class AuctionController {
         AuctionResponse auctionResponse = modelMapper.map(createdAuction, AuctionResponse.class);
 
         return new ResponseEntity<>(auctionResponse, HttpStatus.CREATED);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<AuctionResponse> updateAuction(@PathVariable long id, @RequestBody @Valid UpdateAuctionRequest updateAuctionRequest, @RequestAttribute Authentication authentication) {
+        if (!authentication.isAuthenticated()) {
+            throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
+        }
+
+        Auction auction = auctionService.getAuctionById(id);
+
+        if (!authentication.isUser(auction.getOwner())) {
+            throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
+        }
+
+        Auction auctionChanges = modelMapper.map(updateAuctionRequest, Auction.class);
+        Auction updatedAuction = auctionService.updateAuction(id, auctionChanges);
+        AuctionResponse auctionResponse = modelMapper.map(updatedAuction, AuctionResponse.class);
+
+        return new ResponseEntity<>(auctionResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<AuctionResponse> deleteAuction(@PathVariable long id, @RequestAttribute Authentication authentication) {
+        if (!authentication.isAuthenticated()) {
+            throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
+        }
+
+        Auction auction = auctionService.getAuctionById(id);
+
+        if (!authentication.isUser(auction.getOwner())) {
+            throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
+        }
+
+        Auction deletedAuction = auctionService.deleteAuction(id);
+        AuctionResponse auctionResponse = modelMapper.map(deletedAuction, AuctionResponse.class);
+
+        return new ResponseEntity<>(auctionResponse, HttpStatus.OK);
     }
 }

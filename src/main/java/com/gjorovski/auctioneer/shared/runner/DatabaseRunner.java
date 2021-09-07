@@ -5,7 +5,6 @@ import com.gjorovski.auctioneer.auction.model.Item;
 import com.gjorovski.auctioneer.auction.model.Lot;
 import com.gjorovski.auctioneer.auction.service.AuctionService;
 import com.gjorovski.auctioneer.auction.service.ItemService;
-import com.gjorovski.auctioneer.auction.service.LotService;
 import com.gjorovski.auctioneer.auth.model.Group;
 import com.gjorovski.auctioneer.auth.service.GroupService;
 import com.gjorovski.auctioneer.user.model.User;
@@ -24,16 +23,14 @@ public class DatabaseRunner implements CommandLineRunner {
     private final UserService userService;
     private final GroupService groupService;
     private final ItemService itemService;
-    private final LotService lotService;
     private final AuctionService auctionService;
 
     private final Logger logger = LoggerFactory.getLogger(DatabaseRunner.class);
 
-    public DatabaseRunner(UserService userService, GroupService groupService, ItemService itemService, LotService lotService, AuctionService auctionService) {
+    public DatabaseRunner(UserService userService, GroupService groupService, ItemService itemService, AuctionService auctionService) {
         this.userService = userService;
         this.groupService = groupService;
         this.itemService = itemService;
-        this.lotService = lotService;
         this.auctionService = auctionService;
     }
 
@@ -95,6 +92,7 @@ public class DatabaseRunner implements CommandLineRunner {
         Auction auction = new Auction();
         auction.setName("North Hills Auction");
         auction.setDetails("North Hills testing groups virtual auction house.");
+        auction.setOwner(userService.getUserById(1));
         auction.setLots(List.of(lot));
 
         Auction createdAuction = auctionService.createAuction(auction);
