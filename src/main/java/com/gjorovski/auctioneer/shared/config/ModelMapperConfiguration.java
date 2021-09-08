@@ -60,6 +60,7 @@ public class ModelMapperConfiguration {
         return new PropertyMap<>() {
             @Override
             protected void configure() {
+                skip(destination.getId());
                 using(itemConverter).map(source.getItemId(), destination.getItem());
             }
         };

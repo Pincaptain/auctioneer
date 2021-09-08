@@ -13,10 +13,12 @@ import java.util.List;
 public class AuctionService {
     private final AuctionRepository auctionRepository;
     private final ModelMapper modelMapper;
+    private final LotService lotService;
 
-    public AuctionService(AuctionRepository auctionRepository, ModelMapper modelMapper) {
+    public AuctionService(AuctionRepository auctionRepository, ModelMapper modelMapper, LotService lotService) {
         this.auctionRepository = auctionRepository;
         this.modelMapper = modelMapper;
+        this.lotService = lotService;
     }
 
     public List<Auction> getAuctions() {
@@ -66,11 +68,12 @@ public class AuctionService {
     }
 
     public Lot createAuctionLot(long auctionId, Lot lot) {
+        Lot createdLot = lotService.createLot(lot);
         Auction auction = getAuctionById(auctionId);
-        auction.addLot(lot);
+        auction.addLot(createdLot);
 
         auctionRepository.save(auction);
 
-        return lot;
+        return createdLot;
     }
 }

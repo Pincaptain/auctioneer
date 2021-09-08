@@ -123,6 +123,8 @@ public class AuctionController {
         }
 
         Lot lot = modelMapper.map(createLotRequest, Lot.class);
+        lot.setSeller(authentication.getUser());
+
         Lot createdLot = auctionService.createAuctionLot(id, lot);
         LotResponse lotResponse = modelMapper.map(createdLot, LotResponse.class);
 
