@@ -1,9 +1,12 @@
 package com.gjorovski.auctioneer.auction.controller;
 
 import com.gjorovski.auctioneer.auction.model.Auction;
+import com.gjorovski.auctioneer.auction.model.Lot;
 import com.gjorovski.auctioneer.auction.request.CreateAuctionRequest;
+import com.gjorovski.auctioneer.auction.request.CreateLotRequest;
 import com.gjorovski.auctioneer.auction.request.UpdateAuctionRequest;
 import com.gjorovski.auctioneer.auction.response.AuctionResponse;
+import com.gjorovski.auctioneer.auction.response.LotResponse;
 import com.gjorovski.auctioneer.auction.service.AuctionService;
 import com.gjorovski.auctioneer.auth.domain.Authentication;
 import com.gjorovski.auctioneer.shared.exceptions.PermissionDeniedException;
@@ -93,5 +96,36 @@ public class AuctionController {
         AuctionResponse auctionResponse = modelMapper.map(deletedAuction, AuctionResponse.class);
 
         return new ResponseEntity<>(auctionResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("{id}/lots")
+    public ResponseEntity<List<LotResponse>> getAuctionLots(@PathVariable long id) {
+        List<Lot> lots = auctionService.getAuctionLots(id);
+        List<LotResponse> lotResponses = lots.stream()
+                .map(lot -> modelMapper.map(lot, LotResponse.class))
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(lotResponses, HttpStatus.OK);
+    }
+
+    @GetMapping("{auctionId}/lots/{lotId}")
+    public ResponseEntity<LotResponse> getAuctionLot(@PathVariable long auctionId, @PathVariable long lotId) {
+        Lot lot = auctionService.getAuctionLot(auctionId, lotId);
+        LotResponse lotResponse = modelMapper.map(lot, LotResponse.class);
+
+        return new ResponseEntity<>(lotResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("{id}/lots")
+    public ResponseEntity<LotResponse> createAuctionLot(@PathVariable long id, @RequestAttribute Authentication authentication, @RequestBody @Valid CreateLotRequest createLotRequest) {
+        if (!authentication.isAuthenticated()) {
+            throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
+        }
+
+        Lot lot = modelMapper.map(createLotRequest, Lot.class);
+        Lot createdLot = auctionService.createAuctionLot(id, lot);
+        LotResponse lotResponse = modelMapper.map(createdLot, LotResponse.class);
+
+        return new ResponseEntity<>(lotResponse, HttpStatus.CREATED);
     }
 }

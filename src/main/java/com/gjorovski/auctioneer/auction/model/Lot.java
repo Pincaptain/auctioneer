@@ -35,7 +35,11 @@ public class Lot {
     private double currentBid;
 
     @ManyToOne
-    @JoinColumn(name = "bidder_id")
+    @JoinColumn(name = "seller_id", nullable = false)
+    private User seller;
+
+    @ManyToOne
+    @JoinColumn(name = "highest_bidder_id")
     private User highestBidder;
 
     @Column(name = "created_at", nullable = false, updatable = false)

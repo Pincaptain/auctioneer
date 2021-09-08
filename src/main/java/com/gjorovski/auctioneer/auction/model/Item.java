@@ -20,8 +20,7 @@ public class Item {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Lob
-    @Column(name = "details")
+    @Column(name = "details", length = 512)
     private String details;
 
     @Column(name = "value", nullable = false)

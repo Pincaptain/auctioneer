@@ -77,23 +77,43 @@ public class DatabaseRunner implements CommandLineRunner {
     }
 
     private void createItemsAndAuctions() {
+        User user = userService.getUserById(1);
+        User secondUser = userService.getUserById(2);
+
         Item item = new Item();
         item.setName("Statue of Liberty");
         item.setDetails("The Statue of Liberty is a 305-foot (93-metre) statue located on Liberty Island in Upper New York Bay, off the coast of New York City. The statue is a personification of liberty in the form of a woman. She holds a torch in her raised right hand and clutches a tablet in her left.");
-        item.setValue(250312);
+        item.setValue(250315);
+
+        Item anotherItem = new Item();
+        anotherItem.setName("Eiffel Tower");
+        anotherItem.setDetails("The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris, France. It is named after the engineer Gustave Eiffel, whose company designed and built the tower.");
+        anotherItem.setValue(300250);
 
         Item createdItem = itemService.createItem(item);
+        Item anotherCreatedItem = itemService.createItem(anotherItem);
 
         Lot lot = new Lot();
         lot.setCount(1);
         lot.setItem(createdItem);
         lot.setStartingPrice(200000);
+        lot.setSeller(user);
+        lot.setCurrentBid(210000);
+        lot.setHighestBidder(secondUser);
+
+        Lot anotherLot = new Lot();
+        anotherLot.setCount(2);
+        anotherLot.setItem(anotherCreatedItem);
+        anotherLot.setStartingPrice(300000);
+        anotherLot.setSeller(user);
+        anotherLot.setCurrentBid(310000);
+        anotherLot.setHighestBidder(secondUser);
 
         Auction auction = new Auction();
         auction.setName("North Hills Auction");
         auction.setDetails("North Hills testing groups virtual auction house.");
-        auction.setOwner(userService.getUserById(1));
-        auction.setLots(List.of(lot));
+        auction.setOwner(user);
+        auction.setLots(List.of(lot, anotherLot));
 
         Auction createdAuction = auctionService.createAuction(auction);
 

@@ -23,8 +23,7 @@ public class Auction {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Lob
-    @Column(name = "details")
+    @Column(name = "details", length = 512)
     private String details;
 
     @ManyToOne
@@ -33,4 +32,8 @@ public class Auction {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Lot> lots = new ArrayList<>();
+
+    public void addLot(Lot lot) {
+        lots.add(lot);
+    }
 }

@@ -1,6 +1,7 @@
 package com.gjorovski.auctioneer.auction.service;
 
 import com.gjorovski.auctioneer.auction.model.Auction;
+import com.gjorovski.auctioneer.auction.model.Lot;
 import com.gjorovski.auctioneer.auction.repository.AuctionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -47,5 +48,29 @@ public class AuctionService {
         auctionRepository.delete(auction);
 
         return auction;
+    }
+
+    public List<Lot> getAuctionLots(long id) {
+        Auction auction = getAuctionById(id);
+
+        return auction.getLots();
+    }
+
+    public Lot getAuctionLot(long auctionId, long lotId) {
+        Auction auction = getAuctionById(auctionId);
+
+        return auction.getLots().stream()
+                .filter(lot -> lot.getId().equals(lotId))
+                .findFirst()
+                .orElseThrow(ResourceNotFoundException::new);
+    }
+
+    public Lot createAuctionLot(long auctionId, Lot lot) {
+        Auction auction = getAuctionById(auctionId);
+        auction.addLot(lot);
+
+        auctionRepository.save(auction);
+
+        return lot;
     }
 }
