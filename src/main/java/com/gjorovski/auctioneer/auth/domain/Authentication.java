@@ -25,6 +25,7 @@ public class Authentication {
                 .anyMatch(group -> group.getName().equals(groupName));
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isUser(User other) {
         if (user == null || other == null) {
             return false;

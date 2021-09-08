@@ -2,9 +2,7 @@ package com.gjorovski.auctioneer.auth.validation;
 
 import com.gjorovski.auctioneer.auth.model.Group;
 import com.gjorovski.auctioneer.auth.service.GroupService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
