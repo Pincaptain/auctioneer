@@ -113,10 +113,10 @@ public class DatabaseRunner implements CommandLineRunner {
         auction.setName("North Hills Auction");
         auction.setDetails("North Hills testing groups virtual auction house.");
         auction.setOwner(user);
-        auction.setLots(List.of(lot, anotherLot));
 
         Auction createdAuction = auctionService.createAuction(auction);
 
-        logger.info(String.format("An auction was created with id(%d)", createdAuction.getId()));
+        auctionService.createAuctionLot(createdAuction.getId(), lot);
+        auctionService.createAuctionLot(createdAuction.getId(), anotherLot);
     }
 }

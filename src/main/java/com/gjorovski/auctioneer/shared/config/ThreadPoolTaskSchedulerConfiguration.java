@@ -10,6 +10,7 @@ public class ThreadPoolTaskSchedulerConfiguration {
     public ThreadPoolTaskScheduler threadPoolTaskScheduler() {
         ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
+        threadPoolTaskScheduler.initialize();
 
         return threadPoolTaskScheduler;
     }

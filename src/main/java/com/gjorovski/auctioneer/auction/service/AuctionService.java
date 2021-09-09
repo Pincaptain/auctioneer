@@ -68,12 +68,24 @@ public class AuctionService {
     }
 
     public Lot createAuctionLot(long auctionId, Lot lot) {
-        Lot createdLot = lotService.createLot(lot);
         Auction auction = getAuctionById(auctionId);
-        auction.addLot(createdLot);
+        auction.addLot(lot);
 
         auctionRepository.save(auction);
 
-        return createdLot;
+        Lot latestLot = lotService.getLatestLot();
+        lotService.scheduleLotTask(latestLot);
+
+        return latestLot;
+    }
+
+    public Lot deleteAuctionLot(long auctionId, long lotId) {
+        Auction auction = getAuctionById(auctionId);
+        Lot lot = getAuctionLot(auctionId, lotId);
+
+        auction.removeLot(lot);
+        auctionRepository.save(auction);
+
+        return lot;
     }
 }

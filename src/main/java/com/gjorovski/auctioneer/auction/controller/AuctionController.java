@@ -117,7 +117,7 @@ public class AuctionController {
     }
 
     @PostMapping("{id}/lots")
-    public ResponseEntity<LotResponse> createAuctionLot(@PathVariable long id, @RequestAttribute Authentication authentication, @RequestBody @Valid CreateLotRequest createLotRequest) {
+    public ResponseEntity<LotResponse> createAuctionLot(@PathVariable long id, @RequestBody @Valid CreateLotRequest createLotRequest, @RequestAttribute Authentication authentication) {
         if (!authentication.isAuthenticated()) {
             throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
         }
@@ -129,5 +129,23 @@ public class AuctionController {
         LotResponse lotResponse = modelMapper.map(createdLot, LotResponse.class);
 
         return new ResponseEntity<>(lotResponse, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("{auctionId}/lots/{lotId}")
+    public ResponseEntity<LotResponse> deleteAuctionLot(@PathVariable long auctionId, @PathVariable long lotId, @RequestAttribute Authentication authentication) {
+        if (!authentication.isAuthenticated()) {
+            throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
+        }
+
+        Lot lot = auctionService.getAuctionLot(auctionId, lotId);
+
+        if (!authentication.isUser(lot.getSeller())) {
+            throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
+        }
+
+        Lot deletedLot = auctionService.deleteAuctionLot(auctionId, lotId);
+        LotResponse lotResponse = modelMapper.map(deletedLot, LotResponse.class);
+
+        return new ResponseEntity<>(lotResponse, HttpStatus.OK);
     }
 }

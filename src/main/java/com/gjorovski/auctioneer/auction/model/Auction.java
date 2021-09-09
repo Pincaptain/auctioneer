@@ -30,10 +30,14 @@ public class Auction {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Lot> lots = new ArrayList<>();
 
     public void addLot(Lot lot) {
         lots.add(lot);
+    }
+
+    public void removeLot(Lot lot) {
+        lots.remove(lot);
     }
 }
