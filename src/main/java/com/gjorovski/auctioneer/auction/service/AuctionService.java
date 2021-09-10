@@ -5,6 +5,7 @@ import com.gjorovski.auctioneer.auction.model.Bid;
 import com.gjorovski.auctioneer.auction.model.Lot;
 import com.gjorovski.auctioneer.auction.repository.AuctionRepository;
 import com.gjorovski.auctioneer.shared.exceptions.BadRequestException;
+import com.gjorovski.auctioneer.shared.exceptions.PermissionDeniedException;
 import com.gjorovski.auctioneer.user.model.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -102,6 +103,25 @@ public class AuctionService {
         }
 
         lot.addBid(bid);
+        auctionRepository.save(auction);
+
+        return lot;
+    }
+
+    public Lot cancelBid(long auctionId, long lotId, User user) {
+        Auction auction = getAuctionById(auctionId);
+        Lot lot = getAuctionLot(auctionId, lotId);
+        Bid bid = lotService.getLatestBid(lot);
+
+        if (bid == null) {
+            throw new BadRequestException("There are no bids to cancel.");
+        }
+
+        if (!bid.getBidder().getId().equals(user.getId())) {
+            throw new PermissionDeniedException("The current bid is not yours to cancel.");
+        }
+
+        lot.removeBid(bid);
         auctionRepository.save(auction);
 
         return lot;

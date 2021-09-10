@@ -161,4 +161,16 @@ public class AuctionController {
 
         return new ResponseEntity<>(lotResponse, HttpStatus.OK);
     }
+
+    @GetMapping("{auctionId}/lots/{lotId}/cancel_bid")
+    public ResponseEntity<LotResponse> cancelBid(@PathVariable long auctionId, @PathVariable long lotId, @RequestAttribute Authentication authentication) {
+        if (!authentication.isAuthenticated()) {
+            throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
+        }
+
+        Lot lot = auctionService.cancelBid(auctionId, lotId, authentication.getUser());
+        LotResponse lotResponse = modelMapper.map(lot, LotResponse.class);
+
+        return new ResponseEntity<>(lotResponse, HttpStatus.OK);
+    }
 }

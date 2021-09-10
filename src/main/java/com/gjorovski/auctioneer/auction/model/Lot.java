@@ -49,4 +49,8 @@ public class Lot {
     public void addBid(Bid bid) {
         this.bids.add(bid);
     }
+
+    public void removeBid(Bid bid) {
+        this.bids.remove(bid);
+    }
 }
