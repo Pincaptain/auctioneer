@@ -102,8 +102,7 @@ public class DatabaseRunner implements CommandLineRunner {
         anotherLot.setCount(2);
         anotherLot.setItem(anotherCreatedItem);
         anotherLot.setStartingPrice(300000);
-        anotherLot.setSeller(user);
-        anotherLot.setBids(List.of(new Bid(305000, otherUser)));
+        anotherLot.setSeller(otherUser);
 
         Auction auction = new Auction();
         auction.setName("North Hills Auction");

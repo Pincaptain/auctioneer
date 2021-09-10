@@ -151,7 +151,14 @@ public class AuctionController {
     }
 
     @PostMapping("{auctionId}/lots/{lotId}/bid")
-    public ResponseEntity<LotResponse> bid(@PathVariable long auctionId, @PathVariable long lotId, @RequestBody BidRequest bidRequest, @RequestAttribute Authentication authentication) {
-        return null;
+    public ResponseEntity<LotResponse> bid(@PathVariable long auctionId, @PathVariable long lotId, @RequestBody @Valid BidRequest bidRequest, @RequestAttribute Authentication authentication) {
+        if (!authentication.isAuthenticated()) {
+            throw new PermissionDeniedException(Authentication.NOT_AUTHENTICATED_MESSAGE);
+        }
+
+        Lot lot = auctionService.bid(auctionId, lotId, bidRequest.getBid(), authentication.getUser());
+        LotResponse lotResponse = modelMapper.map(lot, LotResponse.class);
+
+        return new ResponseEntity<>(lotResponse, HttpStatus.OK);
     }
 }

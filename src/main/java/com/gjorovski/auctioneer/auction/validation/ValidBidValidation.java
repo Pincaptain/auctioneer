@@ -34,6 +34,10 @@ public class ValidBidValidation implements ConstraintValidator<ValidBid, Double>
         Lot lot = lotService.getLotById(lotId);
         Bid currentBid = lotService.getLatestBid(lot);
 
+        if (currentBid == null) {
+            return true;
+        }
+
         return !(bid <= currentBid.getBid());
     }
 }

@@ -1,8 +1,11 @@
 package com.gjorovski.auctioneer.auction.service;
 
 import com.gjorovski.auctioneer.auction.model.Auction;
+import com.gjorovski.auctioneer.auction.model.Bid;
 import com.gjorovski.auctioneer.auction.model.Lot;
 import com.gjorovski.auctioneer.auction.repository.AuctionRepository;
+import com.gjorovski.auctioneer.shared.exceptions.BadRequestException;
+import com.gjorovski.auctioneer.user.model.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -84,6 +87,21 @@ public class AuctionService {
         Lot lot = getAuctionLot(auctionId, lotId);
 
         auction.removeLot(lot);
+        auctionRepository.save(auction);
+
+        return lot;
+    }
+
+    public Lot bid(long auctionId, long lotId, double bidAmount, User bidder) {
+        Auction auction = getAuctionById(auctionId);
+        Lot lot = getAuctionLot(auctionId, lotId);
+        Bid bid = new Bid(bidAmount, bidder);
+
+        if (lot.getSeller().getId().equals(bidder.getId())) {
+            throw new BadRequestException("You cannot bid on your own lot.");
+        }
+
+        lot.addBid(bid);
         auctionRepository.save(auction);
 
         return lot;

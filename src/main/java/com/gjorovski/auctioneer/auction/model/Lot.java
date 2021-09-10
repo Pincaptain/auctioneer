@@ -45,4 +45,8 @@ public class Lot {
 
     @Column(name = "expires_at", nullable = false, updatable = false)
     private LocalDateTime expiresAt = createdAt.plusHours(DEFAULT_LISTING_DURATION);
+
+    public void addBid(Bid bid) {
+        this.bids.add(bid);
+    }
 }
