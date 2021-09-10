@@ -15,10 +15,15 @@ import java.util.List;
 @Getter
 @Setter
 public class Inventory {
+    private static final long DEFAULT_INITIAL_CURRENCY = 0;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "currency")
+    private double currency = DEFAULT_INITIAL_CURRENCY;
 
     @OneToOne
     @JoinColumn(name = "owner_id", nullable = false)

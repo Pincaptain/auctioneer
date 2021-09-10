@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "lot", schema = "public")
@@ -31,16 +33,12 @@ public class Lot {
     @Column(name = "starting_price", nullable = false)
     private double startingPrice;
 
-    @Column(name = "current_bid")
-    private double currentBid;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Bid> bids = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
     private User seller;
-
-    @ManyToOne
-    @JoinColumn(name = "highest_bidder_id")
-    private User highestBidder;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();

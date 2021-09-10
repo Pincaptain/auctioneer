@@ -1,6 +1,7 @@
 package com.gjorovski.auctioneer.shared.runner;
 
 import com.gjorovski.auctioneer.auction.model.Auction;
+import com.gjorovski.auctioneer.auction.model.Bid;
 import com.gjorovski.auctioneer.auction.model.Item;
 import com.gjorovski.auctioneer.auction.model.Lot;
 import com.gjorovski.auctioneer.auction.service.AuctionService;
@@ -9,8 +10,6 @@ import com.gjorovski.auctioneer.auth.model.Group;
 import com.gjorovski.auctioneer.auth.service.GroupService;
 import com.gjorovski.auctioneer.user.model.User;
 import com.gjorovski.auctioneer.user.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -25,7 +24,6 @@ public class DatabaseRunner implements CommandLineRunner {
     private final ItemService itemService;
     private final AuctionService auctionService;
 
-    private final Logger logger = LoggerFactory.getLogger(DatabaseRunner.class);
 
     public DatabaseRunner(UserService userService, GroupService groupService, ItemService itemService, AuctionService auctionService) {
         this.userService = userService;
@@ -78,7 +76,7 @@ public class DatabaseRunner implements CommandLineRunner {
 
     private void createItemsAndAuctions() {
         User user = userService.getUserById(1);
-        User secondUser = userService.getUserById(2);
+        User otherUser = userService.getUserById(2);
 
         Item item = new Item();
         item.setName("Statue of Liberty");
@@ -98,16 +96,14 @@ public class DatabaseRunner implements CommandLineRunner {
         lot.setItem(createdItem);
         lot.setStartingPrice(200000);
         lot.setSeller(user);
-        lot.setCurrentBid(210000);
-        lot.setHighestBidder(secondUser);
+        lot.setBids(List.of(new Bid(210000, otherUser)));
 
         Lot anotherLot = new Lot();
         anotherLot.setCount(2);
         anotherLot.setItem(anotherCreatedItem);
         anotherLot.setStartingPrice(300000);
         anotherLot.setSeller(user);
-        anotherLot.setCurrentBid(310000);
-        anotherLot.setHighestBidder(secondUser);
+        anotherLot.setBids(List.of(new Bid(305000, otherUser)));
 
         Auction auction = new Auction();
         auction.setName("North Hills Auction");

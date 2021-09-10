@@ -1,5 +1,6 @@
 package com.gjorovski.auctioneer.auction.service;
 
+import com.gjorovski.auctioneer.auction.model.Bid;
 import com.gjorovski.auctioneer.auction.model.Lot;
 import com.gjorovski.auctioneer.auction.repository.LotRepository;
 import com.gjorovski.auctioneer.auction.task.LotExpirationTask;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.ZoneId;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -44,5 +46,12 @@ public class LotService {
         lotRepository.delete(lot);
 
         return lot;
+    }
+
+    public Bid getLatestBid(Lot lot) {
+        return lot.getBids()
+                .stream()
+                .max(Comparator.comparingDouble(Bid::getBid))
+                .orElse(null);
     }
 }

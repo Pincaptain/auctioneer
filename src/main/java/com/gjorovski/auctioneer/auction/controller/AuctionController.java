@@ -2,6 +2,7 @@ package com.gjorovski.auctioneer.auction.controller;
 
 import com.gjorovski.auctioneer.auction.model.Auction;
 import com.gjorovski.auctioneer.auction.model.Lot;
+import com.gjorovski.auctioneer.auction.request.BidRequest;
 import com.gjorovski.auctioneer.auction.request.CreateAuctionRequest;
 import com.gjorovski.auctioneer.auction.request.CreateLotRequest;
 import com.gjorovski.auctioneer.auction.request.UpdateAuctionRequest;
@@ -147,5 +148,10 @@ public class AuctionController {
         LotResponse lotResponse = modelMapper.map(deletedLot, LotResponse.class);
 
         return new ResponseEntity<>(lotResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("{auctionId}/lots/{lotId}/bid")
+    public ResponseEntity<LotResponse> bid(@PathVariable long auctionId, @PathVariable long lotId, @RequestBody BidRequest bidRequest, @RequestAttribute Authentication authentication) {
+        return null;
     }
 }
